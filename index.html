@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>NARUTO SHIPPUDEN | Select Your Ninja</title>
+    <!-- Adsterra Affiliate Integration -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
@@ -1132,6 +1133,14 @@
         `;
         document.head.appendChild(rippleStyle);
 
+        // ===== ADSTERRA AFFILIATE LINKS =====
+        // GANTI LINK DI BAWAH INI DENGAN LINK ADSTERRA ANDA
+        const ADSTERRA_LINKS = {
+            itachi: 'https://www.effectivecpmnetwork.com/j81cr2zin?key=c552a1ac9cec11d4d14dba6618de245b',   // ← GANTI
+            naruto: 'https://grufffeelimitation.com/bd5bw6vmi?key=9978482c10839168d36685d7619ec8ad',   // ← GANTI  
+            sasuke: 'https://grufffeelimitation.com/tuhj1ix3t7?key=f55f48b534300ecf289f9c7a6c61a532'    // ← GANTI
+        };
+
         // ===== PLAY BUTTON =====
         playBtn.addEventListener('click', function() {
             if (!selectedChar) return;
@@ -1139,15 +1148,26 @@
             this.style.transform = 'scale(0.95)';
             setTimeout(() => {
                 this.style.transform = '';
-                this.textContent = 'ENTERING BATTLE...';
+                this.textContent = 'REDIRECTING...';
                 this.disabled = true;
 
-                // Simulate loading
+                // Open Adsterra link in new tab based on selected character
                 setTimeout(() => {
-                    alert(`🎮 Starting game as ${selectedChar.toUpperCase()}!\n\nPreparing your ninja tools and jutsu...\nRedirecting to battle arena...`);
+                    const affiliateLink = ADSTERRA_LINKS[selectedChar] || ADSTERRA_LINKS.naruto;
+
+                    // Create a hidden link and click it (better for popup blockers)
+                    const link = document.createElement('a');
+                    link.href = affiliateLink;
+                    link.target = '_blank';
+                    link.rel = 'noopener noreferrer';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+
+                    // Reset button
                     this.textContent = `PLAY AS ${selectedChar.toUpperCase()}`;
                     this.disabled = false;
-                }, 2000);
+                }, 1200);
             }, 150);
         });
 
